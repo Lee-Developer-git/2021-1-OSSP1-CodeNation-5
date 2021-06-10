@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Search from '../components/Search';
-import Keyword from '../components/Keyword';
+import Search from '../components/keywords/Search';
+import Keyword from '../components/keywords/Keyword';
 
 const style = {
     main: {
@@ -8,6 +8,7 @@ const style = {
     },
     title:{
         textAlign:"center",
+        fontSize: "20px"
     },
     container: {
         border: '1px black solid',
@@ -57,7 +58,8 @@ function Main() {
                         </div>
                     ):("")}
                 </div>
-            </div>
+            </div> <br/>
+            <div style={style.container}></div>
         </div>
     );
 }

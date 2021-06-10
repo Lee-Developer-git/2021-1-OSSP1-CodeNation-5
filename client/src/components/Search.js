@@ -81,7 +81,6 @@ class Search extends React.Component{
                     inputProps={{ 'aria-label': 'description' }}
                 />
                 <Button type="submit">봇</Button>
-                <Button>검색</Button>
             </Form>
         </>
         );

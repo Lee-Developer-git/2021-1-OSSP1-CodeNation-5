@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Search from '../components/Search';
 import Keyword from '../components/Keyword';
+import Register from '../components/Register';
+import Login from '../components/Login';
 
 const style = {
     main: {
@@ -14,6 +16,7 @@ const style = {
         padding: "30px",
     },
 };
+
 function Main() {
     const initialValue =[{
         id: '',
@@ -28,6 +31,7 @@ function Main() {
 
     const [keywords, setKeywords] = useState(initialValue);
     const [form, setValues] = useState(initialValue.keyword);
+    const [auth, setAuth] = useState(false);
 
     const callApi = async () => {
         const response = await fetch('http://localhost:5000/api/search');
@@ -43,23 +47,34 @@ function Main() {
         }
     });
 
-    return (
-        <div style={style.main}>
-            <div style={style.title}>자료 조사 봇</div>
-            <div style={style.container}>
-                <Search style={style.searchbar} form={form}/> <br/>
-                <div>
-                    {keywords ? (
-                        <div>
-                            {keywords.map(c => {
-                            return <Keyword key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
-                            })}
-                        </div>
-                    ):("")}
+    if(auth) {
+        return (
+            <div style={style.main}>
+                <div style={style.title}>자료 조사 봇</div>
+                <div style={style.container}>
+                    <Search style={style.searchbar} form={form}/> <br/>
+                    <div>
+                        {keywords ? (
+                            <div>
+                                {keywords.map(c => {
+                                return <Keyword key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
+                                })}
+                            </div>
+                        ):("")}
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div style={style.main}>
+                <div style={style.container}>
+                    <Login setAuth={setAuth}/>
+                </div>
+            </div>
+        );
+    }
+
 }
 
 export default Main;

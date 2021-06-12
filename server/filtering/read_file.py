@@ -402,4 +402,3 @@ print(output)
 # with open(file_path, 'w', encoding='UTF-8-sig') as outfile:
 #     json.dump(output, outfile, ensure_ascii=False)
 
-

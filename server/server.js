@@ -33,8 +33,6 @@ connection.connect(function (err) {
     else console.log('DB connect error');
 });
 
-app.use('/api/filtering', require('./filtering/filtering'));
-
 app.post('/api/register', function(req, res) {
     var body = req.body;
 

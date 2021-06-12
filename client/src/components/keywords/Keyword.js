@@ -117,12 +117,12 @@ function Keyword({ one, two, trd, four, five, six }) {
                     <option value="image">image</option>
                 </Select>
             </FormControl>
-            {(state.material === 'view') ? (
+            {(state.material == 'view') ? (
                 <ViewMaterial/>
                 ):(
                 <div>
-                {(state.material === 'image') ?(
-                    <ImageMaterial/>
+                {(state.material == 'image') ?(
+                    <ImageMaterial />
                 ): (
                     ""
                 )}

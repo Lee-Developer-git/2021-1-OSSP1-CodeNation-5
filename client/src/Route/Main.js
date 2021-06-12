@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import Search from '../components/keywords/Search';
 import Keyword from '../components/keywords/Keyword';
+import Inputfilter from '../components/filtering/Inputfilter';
 import Register from '../components/Register';
 import Login from '../components/Login';
 import StoredCommonMaterial from '../components/StoredCommonMaterial';
@@ -58,6 +59,8 @@ function Main() {
         const body = await response.json();
         return body;
     };
+    
+    
 
     useEffect(() => {
         try {
@@ -91,7 +94,7 @@ function Main() {
                 <div style={style.title}><h2>자료 조사 봇</h2></div>
                 <div style={style.title}>안녕하세요 {cookies.user_name} 님! <button onClick={handleOnLogout}>로그아웃</button></div>
                 <div style={style.container}>
-                    <Search style={style.searchbar} form={form}/> <br/>
+                    <Search form={form}/> <br/>
                     <div>
                         {keywords ? (
                             <div>
@@ -132,6 +135,9 @@ function Main() {
                                 </div>
                         ) : ("")}
                     </div>
+                </div><br/>
+                <div style={style.container}>
+                    <Inputfilter /><br/>
                 </div>
             </div>
         );

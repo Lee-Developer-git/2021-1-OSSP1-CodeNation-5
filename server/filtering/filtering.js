@@ -57,7 +57,6 @@ router.get('/', (req, res)=>{
 router.post('/',(req, res) =>{
     let SQL = "INSERT INTO filtering VALUES (null, ?, ?, ?, ?, ?, ?)"
     let filepath = req.body.filepath;
-
     data=re;
     var a = JSON.parse(JSON.stringify((data)));
     var count = 0;
@@ -123,8 +122,7 @@ router.post('/',(req, res) =>{
 })
 
 
-// var read_file = document.getElementById('read');
-keyword(filepath);
+// var read_file = document.getElementById('read')
 
 
 // var fs = require('fs');

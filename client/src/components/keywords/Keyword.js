@@ -50,7 +50,7 @@ function Keyword({ one, two, trd, four, five, six }) {
     const handleChange = (e) => {
         setstate({
             material : e.target.value
-        });
+        });   
     };
 
     return(
@@ -112,7 +112,7 @@ function Keyword({ one, two, trd, four, five, six }) {
                         id: 'select-material'
                     }}
                 >
-                    <option aria-level="None" value="" />
+                    <option aria-label="None"/>
                     <option value="view">view</option>
                     <option value="image">image</option>
                 </Select>

@@ -25,12 +25,10 @@ function ViewMaterial(){
     return(
         <div>
             <br/>
+            <div>자료</div>
+            <div>title: </div>
+            <div>url: </div>
             <div className={classes.name}>자료</div>
-            <div>
-                
-            </div>
-            <div>title : <span></span></div>
-            <div>url : <span></span></div>
         </div>
     );
 }

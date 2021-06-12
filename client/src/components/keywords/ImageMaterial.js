@@ -6,7 +6,7 @@ function ImageMaterial(){
         <div>
             <br/>
             <div>자료</div>
-            
+            <div>url: </div>
         </div>
     );
 }

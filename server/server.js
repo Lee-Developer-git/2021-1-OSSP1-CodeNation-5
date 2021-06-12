@@ -33,9 +33,6 @@ connection.connect(function (err) {
     else console.log('DB connect error');
 });
 
-
-// router.get('/', function (req, res) {});
-
 app.post('/api/register', function(req, res) {
     var body = req.body;
 
@@ -55,9 +52,16 @@ app.post('/api/register', function(req, res) {
 app.post('/api/register/checknickname', function(req, res) {
     var user_name = req.body.user_name;
 
+    var fail = false;
+
+    if(user_name.length < 2)
+        fail = true;
+
     let SQL = "SELECT * FROM user_info WHERE username='" + user_name + "';";
     connection.query(SQL,function(error, results, fields) {
-        if(JSON.stringify(results).length > 2)
+        if(fail)
+            res.send({state:"fail", message:"닉네임 양식을 맞춰주세요."});
+        else if(JSON.stringify(results).length > 2)
             res.send({state:"fail", message:"이미 존재하는 닉네임 입니다."});
         else
             res.send({state:"success", message:"사용 가능한 닉네임 입니다."});
@@ -67,9 +71,16 @@ app.post('/api/register/checknickname', function(req, res) {
 app.post('/api/register/checkid', function(req, res) {
     var user_id = req.body.user_id;
 
+    var fail = false;
+
+    if(user_id.length < 6)
+        fail = true;
+
     let SQL = "SELECT * FROM user_info WHERE user_id='" + user_id + "';";
     connection.query(SQL,function(error, results, fields) {
-        if(JSON.stringify(results).length > 2)
+        if(fail)
+            res.send({state:"fail", message:"아이디 양식을 맞춰주세요."})
+        else if(JSON.stringify(results).length > 2)
             res.send({state:"fail", message:"이미 존재하는 아이디 입니다."});
         else
             res.send({state:"success", message:"사용 가능한 아이디 입니다."});

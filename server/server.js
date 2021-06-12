@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
+const auth = require('./auth');
 
 const app = express();
 
@@ -11,7 +12,7 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 
 app.use(cors());
-app.user(cookieParser());
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // 이후 데이터를 주고 받을 때 post방식을 사용하기 위한 초기 설정입니다. 무시하시면 됩니다.
@@ -69,8 +70,8 @@ app.post('/api/search', async(req, res) => {
     });
 })
 
-app.post('/register', auth.register);
-app.post('/login', auth.login);
+app.post('/api/register', auth.register);
+app.post('/api/login', auth.login);
 
 app.listen(port, () => {
     console.log(`listening on port${port}`);

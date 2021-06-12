@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import Search from '../components/Search';
-import Keyword from '../components/Keyword';
+import Search from '../components/keywords/Search';
+import Keyword from '../components/keywords/Keyword';
+import Inputfilter from '../components/filtering/Inputfilter';
 import Register from '../components/Register';
 import Login from '../components/Login';
 
@@ -40,6 +41,8 @@ function Main() {
         const body = await response.json();
         return body;
     };
+    
+    
 
     useEffect(() => {
         try {
@@ -53,12 +56,12 @@ function Main() {
         removeCookie('auth_state');
     }
 
-    if(cookies.auth_state !== undefined && cookies.is_register_page === undefined) {
+    // if(cookies.auth_state !== undefined && cookies.is_register_page === undefined) {
         return (
             <div style={style.main}>
                 <div style={style.title}>자료 조사 봇<button onClick={handleOnLogout}>로그아웃</button></div>
                 <div style={style.container}>
-                    <Search style={style.searchbar} form={form}/> <br/>
+                    <Search form={form}/> <br/>
                     <div>
                         {keywords ? (
                             <div>
@@ -68,26 +71,29 @@ function Main() {
                             </div>
                         ):("")}
                     </div>
-                </div>
-            </div>
-        );
-    } else if(cookies.is_register_page) {
-        return (
-            <div style={style.main}>
+                </div><br/>
                 <div style={style.container}>
-                    <Register setCookie={setCookie} removeCookie={removeCookie}/>
+                    <Inputfilter /><br/>
                 </div>
             </div>
         );
-    }else {
-        return (
-            <div style={style.main}>
-                <div style={style.container}>
-                    <Login setCookie={setCookie} removeCookie={removeCookie}/>
-                </div>
-            </div>
-        );
-    }
+    // } else if(cookies.is_register_page) {
+    //     return (
+    //         <div style={style.main}>
+    //             <div style={style.container}>
+    //                 <Register setCookie={setCookie} removeCookie={removeCookie}/>
+    //             </div>
+    //         </div>
+    //     );
+    // }else {
+    //     return (
+    //         <div style={style.main}>
+    //             <div style={style.container}>
+    //                 <Login setCookie={setCookie} removeCookie={removeCookie}/>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
 }
 

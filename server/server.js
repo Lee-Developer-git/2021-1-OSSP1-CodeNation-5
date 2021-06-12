@@ -36,8 +36,8 @@ connection.connect(function (err) {
 
 app.post('/api/register', auth.register);
 app.post('/api/login', auth.login);
-app.use("/api/search", require("./search"));
-app.use("/api/material", require("./material"));
+app.use('/api/search', require('./search'));
+app.use('/api/material', require('./material'));
 // router.get('/', function (req, res) {});
 
 // router.post('/register', auth.register);

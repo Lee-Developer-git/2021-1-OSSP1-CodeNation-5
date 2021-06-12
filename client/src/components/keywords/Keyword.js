@@ -102,7 +102,7 @@ function Keyword({ one, two, trd, four, five, six }) {
                 <Button type="submit" variant="contained" color="primary" style={{ width:"100%" }}>검색</Button>
             </Form>
             <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="select-material">자료형 선택</InputLabel>
+                <InputLabel htmlFor="select-material">자료형</InputLabel>
                 <Select
                     native
                     value={state.material}
@@ -117,11 +117,11 @@ function Keyword({ one, two, trd, four, five, six }) {
                     <option value="image">image</option>
                 </Select>
             </FormControl>
-            {(material == 'view') ? (
+            {(state.material == 'view') ? (
                 <ViewMaterial/>
                 ):(
                 <div>
-                {(material == 'image') ?(
+                {(state.material == 'image') ?(
                     <ImageMaterial />
                 ): (
                     ""

@@ -127,13 +127,8 @@ router.post('/',(req, res) =>{
 keyword(filepath);
 
 
- 
-
-
 // var fs = require('fs');
 // var data = JSON.parse(JSON.stringify((fs.readFileSync('/Users/jiwon/Codenation/2021-1-OSSP1-CodeNation-5-1/client/1.json', 'utf8'))));
 // console.log(data)
 
-
-
-
+module.exports=router;

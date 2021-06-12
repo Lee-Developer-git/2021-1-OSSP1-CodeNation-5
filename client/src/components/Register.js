@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Button } from 'reactstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-import { post } from 'axios';
 
 class Register extends React.Component{
 

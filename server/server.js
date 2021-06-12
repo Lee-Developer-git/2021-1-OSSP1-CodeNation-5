@@ -89,7 +89,7 @@ app.post('/api/register', function(req, res) {
 app.post('/api/register/checknickname', function(req, res) {
     var user_name = req.body.user_name;
 
-    let SQL = "SELECT * FROM user_info WHERE username='" + user_name + "';"
+    let SQL = "SELECT * FROM user_info WHERE username='" + user_name + "';";
     connection.query(SQL,function(error, results, fields) {
         if(JSON.stringify(results).length > 2)
             res.send({state:"fail", message:"이미 존재하는 닉네임 입니다."});
@@ -101,7 +101,7 @@ app.post('/api/register/checknickname', function(req, res) {
 app.post('/api/register/checkid', function(req, res) {
     var user_id = req.body.user_id;
 
-    let SQL = "SELECT * FROM user_info WHERE user_id='" + user_id + "';"
+    let SQL = "SELECT * FROM user_info WHERE user_id='" + user_id + "';";
     connection.query(SQL,function(error, results, fields) {
         if(JSON.stringify(results).length > 2)
             res.send({state:"fail", message:"이미 존재하는 아이디 입니다."});
@@ -112,10 +112,20 @@ app.post('/api/register/checkid', function(req, res) {
 
 app.post('/api/login', function(req, res) {
     var body = req.body;
+
     var user_id = body.user_id;
     var user_pw = body.user_pw;
 
-    console.log(user_id + " " + user_pw);
+    let SQL = "SELECT * FROM user_info WHERE user_id='" + user_id + "' AND user_pw='" + user_pw + "';";
+    connection.query(SQL, function(error, results, fields) {
+        if(results[0] === undefined)
+            res.send({state:"fail", message:"존재하지 않는 회원이거나 잘못된 아이디, 비밀번호 입니다."});
+        else
+        {
+            console.log(results[0].username + " Log in.");
+            res.send({state:"success", username:results[0].username});
+        }
+    });
 });
 
 app.listen(port, () => {

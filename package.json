@@ -1,6 +1,7 @@
 {
     "name": "searchbot",
     "version": "1.0.0",
+    "private": true,
     "scripts": {
         "server": "nodemon ./server/server.js",
         "client": "cd client && yarn start --prefix",

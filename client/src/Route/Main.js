@@ -16,6 +16,7 @@ const style = {
     },
     container: {
         border: '1px black solid',
+        margin: "10px",
         padding: "30px",
     },
 };
@@ -34,7 +35,7 @@ function Main() {
 
     const [keywords, setKeywords] = useState(initialValue);
     const [form, setValues] = useState(initialValue.keyword);
-    const [cookies, setCookie, removeCookie] = useCookies(['auth_state', 'is_register_page']);
+    const [cookies, setCookie, removeCookie] = useCookies(['auth_state', 'is_register_page', 'user_id', 'user_name']);
 
     const callApi = async () => {
         const response = await fetch('http://localhost:5000/api/search');
@@ -54,12 +55,15 @@ function Main() {
 
     var handleOnLogout = function(e){
         removeCookie('auth_state');
+        removeCookie('user_name');
+        removeCookie('user_id');
     }
 
-    // if(cookies.auth_state !== undefined && cookies.is_register_page === undefined) {
+    if(cookies.auth_state !== undefined && cookies.is_register_page === undefined) {
         return (
             <div style={style.main}>
-                <div style={style.title}>자료 조사 봇<button onClick={handleOnLogout}>로그아웃</button></div>
+                <div style={style.title}><h2>자료 조사 봇</h2></div>
+                <div style={style.title}>안녕하세요 {cookies.user_name} 님! <button onClick={handleOnLogout}>로그아웃</button></div>
                 <div style={style.container}>
                     <Search form={form}/> <br/>
                     <div>
@@ -77,23 +81,23 @@ function Main() {
                 </div>
             </div>
         );
-    // } else if(cookies.is_register_page) {
-    //     return (
-    //         <div style={style.main}>
-    //             <div style={style.container}>
-    //                 <Register setCookie={setCookie} removeCookie={removeCookie}/>
-    //             </div>
-    //         </div>
-    //     );
-    // }else {
-    //     return (
-    //         <div style={style.main}>
-    //             <div style={style.container}>
-    //                 <Login setCookie={setCookie} removeCookie={removeCookie}/>
-    //             </div>
-    //         </div>
-    //     );
-    // }
+    } else if(cookies.is_register_page) {
+        return (
+            <div style={style.main}>
+                <div style={style.container}>
+                    <Register setCookie={setCookie} removeCookie={removeCookie}/>
+                </div>
+            </div>
+        );
+    }else {
+        return (
+            <div style={style.main}>
+                <div style={style.container}>
+                    <Login setCookie={setCookie} removeCookie={removeCookie}/>
+                </div>
+            </div>
+        );
+    }
 
 }
 

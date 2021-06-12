@@ -57,8 +57,6 @@ router.get('/', (req, res)=>{
 router.post('/',(req, res) =>{
     let SQL = "INSERT INTO filtering VALUES (null, ?, ?, ?, ?, ?, ?)"
     let filepath = req.body.filepath;
-
-    keyword(filepath);
     data=re;
     var a = JSON.parse(JSON.stringify((data)));
     var count = 0;
@@ -124,7 +122,7 @@ router.post('/',(req, res) =>{
 })
 
 
-// var read_file = document.getElementById('read');
+// var read_file = document.getElementById('read')
 
 
  
@@ -133,6 +131,5 @@ router.post('/',(req, res) =>{
 // var fs = require('fs');
 // var data = JSON.parse(JSON.stringify((fs.readFileSync('/Users/jiwon/Codenation/2021-1-OSSP1-CodeNation-5-1/client/1.json', 'utf8'))));
 // console.log(data)
-
 
 

@@ -1,8 +1,9 @@
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
+const auth = require('./auth');
 
-// const auth = require('./auth');
 const app = express();
 
 const port = process.env.port || 5000;
@@ -12,11 +13,11 @@ const cheerio = require('cheerio');
 
 app.use(cors());
 
+app.use(cookieParser());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // 이후 데이터를 주고 받을 때 post방식을 사용하기 위한 초기 설정입니다. 무시하시면 됩니다.
-
-var router = express.Router();
 
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -33,6 +34,8 @@ connection.connect(function (err) {
 });
 
 
+app.post('/api/register', auth.register);
+app.post('/api/login', auth.login);
 app.use("/api/search", require("./search"));
 app.use("/api/material", require("./material"));
 // router.get('/', function (req, res) {});
@@ -41,6 +44,7 @@ app.use("/api/material", require("./material"));
 // router.post('/login', auth.login);
 
 // app.use('/api', router);
+
 
 app.listen(port, () => {
     console.log(`listening on port${port}`);

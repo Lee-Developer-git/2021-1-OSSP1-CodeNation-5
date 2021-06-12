@@ -11,6 +11,7 @@ const style = {
     },
     title:{
         textAlign:"center",
+        fontSize: "20px"
     },
     container: {
         border: '1px black solid',

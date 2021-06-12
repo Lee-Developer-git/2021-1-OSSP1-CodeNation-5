@@ -1,12 +1,16 @@
 import React from 'react';
-import { Form, Button } from 'reactstrap';
+import { Form } from 'reactstrap';
 import { post } from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 const style = {
     search: {
         width: '80%',
+    },
+    submit: {
+        width: '20px',
     },
 };
 
@@ -80,8 +84,7 @@ class Search extends React.Component{
                     onChange={this.onChange}
                     inputProps={{ 'aria-label': 'description' }}
                 />
-                <Button type="submit">봇</Button>
-                <Button>검색</Button>
+                <Button type="submit" variant="outlined" className={style.submit}>봇</Button>
             </Form>
         </>
         );

@@ -20,7 +20,7 @@ const style = makeStyles((theme)=>({
     },
 }));
 
-function Keyword({cookie, key, one, two, trd, four, five, six }) {
+function Keyword({ one, two, trd, four, five, six }) {
     const classes = style;
 
     const initialState ={
@@ -102,7 +102,7 @@ function Keyword({cookie, key, one, two, trd, four, five, six }) {
                 <Button type="submit" variant="contained" color="primary" style={{ width:"100%" }}>검색</Button>
             </Form>
             <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="select-material">자료형 선택</InputLabel>
+                <InputLabel htmlFor="select-material">자료형</InputLabel>
                 <Select
                     native
                     value={state.material}
@@ -118,11 +118,11 @@ function Keyword({cookie, key, one, two, trd, four, five, six }) {
                 </Select>
             </FormControl>
             {(state.material === 'view') ? (
-                <ViewMaterial id={cookie.user_id}/>
+                <ViewMaterial/>
                 ):(
                 <div>
                 {(state.material === 'image') ?(
-                    <ImageMaterial id={cookie.user_id}/>
+                    <ImageMaterial/>
                 ): (
                     ""
                 )}

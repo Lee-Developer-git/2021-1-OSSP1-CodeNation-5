@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Button } from 'reactstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
-import { post } from 'axios';
 
 class Login extends React.Component{
     constructor(props) {
@@ -23,7 +22,6 @@ class Login extends React.Component{
 
     onSubmit = (e) => {
         e.preventDefault();
-        alert("submit");
         fetch('http://localhost:5000/api/login', {
             method: 'post',
             headers: {
@@ -34,17 +32,23 @@ class Login extends React.Component{
                 user_pw: this.state.user_pw
             })
         })
+        .then(response => response.json())
+        .then(response => {
+            if(response.state === "fail")
+                alert(response.message);
+            else
+            {
+                this.props.setCookie('user_id', this.state.user_id, {maxAge: 3600});
+                this.props.setCookie('user_name', response.username, {maxAge: 3600});
+                this.props.setCookie('auth_state', true, {maxAge: 3600});
+            }
+        });
     };
 
     handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         });
-    }
-
-    handleOnClick = (e) => {
-        this.props.setCookie('auth_state', true, {maxAge: 3600});
-        alert(this.state.user_id + " " + this.state.user_pw);
     }
 
     handleOnRegister = (e) => {

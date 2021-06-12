@@ -1,10 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import Search from '../components/Search';
 import Keyword from '../components/Keyword';
+import Register from '../components/Register';
+import Login from '../components/Login';
 
 const style = {
     main: {
-        width: '400px',
+        width: 400,
+    },
+    title:{
+        textAlign:"center",
+        fontSize: "20px"
+    },
+    container: {
+        border: '1px black solid',
+        padding: "30px",
     },
 };
 
@@ -22,6 +33,7 @@ function Main() {
 
     const [keywords, setKeywords] = useState(initialValue);
     const [form, setValues] = useState(initialValue.keyword);
+    const [cookies, setCookie, removeCookie] = useCookies(['auth_state', 'is_register_page']);
 
     const callApi = async () => {
         const response = await fetch('http://localhost:5000/api/search');
@@ -37,21 +49,46 @@ function Main() {
         }
     });
 
-    return (
-        <div className={style.main}>
-            <div>자료 조사 봇</div>
-            <Search form={form}/>
-            <div>
-                {keywords ? (
+    var handleOnLogout = function(e){
+        removeCookie('auth_state');
+    }
+
+    if(cookies.auth_state !== undefined && cookies.is_register_page === undefined) {
+        return (
+            <div style={style.main}>
+                <div style={style.title}>자료 조사 봇<button onClick={handleOnLogout}>로그아웃</button></div>
+                <div style={style.container}>
+                    <Search style={style.searchbar} form={form}/> <br/>
                     <div>
-                        {keywords.map(c => {
-                        return <Keyword key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
-                        })}
+                        {keywords ? (
+                            <div>
+                                {keywords.map(c => {
+                                return <Keyword key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
+                                })}
+                            </div>
+                        ):("")}
                     </div>
-                ):("")}
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else if(cookies.is_register_page) {
+        return (
+            <div style={style.main}>
+                <div style={style.container}>
+                    <Register setCookie={setCookie} removeCookie={removeCookie}/>
+                </div>
+            </div>
+        );
+    }else {
+        return (
+            <div style={style.main}>
+                <div style={style.container}>
+                    <Login setCookie={setCookie} removeCookie={removeCookie}/>
+                </div>
+            </div>
+        );
+    }
+
 }
 
 export default Main;

@@ -1,12 +1,19 @@
 import React from 'react';
-import { Input, Form, Button } from 'reactstrap';
+import { Form } from 'reactstrap';
 import { post } from 'axios';
+import { makeStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 const style = {
     search: {
         width: '80%',
     },
+    submit: {
+        width: '20px',
+    },
 };
+
 
 class Search extends React.Component{
     constructor(props) {
@@ -15,6 +22,14 @@ class Search extends React.Component{
             keyword: '',
         }
     }
+
+    useStyles = makeStyles((theme) => ({
+        root: {
+          '& > *': {
+            margin: theme.spacing(1),
+        },
+        },
+    }));
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -58,16 +73,17 @@ class Search extends React.Component{
     render(){
         return(
         <>
-            <Form onSubmit={this.onSubmit}>
+            <Form onSubmit={this.onSubmit} className={this.useStyles.root} noValidate autoComplete="off">
                 <Input
                     id="keyword"
                     name="keyword"
                     className="keyword"
+                    placeholder="검색"
                     style={style.search}
                     onChange={this.onChange}
+                    inputProps={{ 'aria-label': 'description' }}
                 />
-                <Button type="submit">봇</Button>
-                <Button>검색</Button>
+                <Button type="submit" variant="outlined" className={style.submit}>봇</Button>
             </Form>
         </>
         );

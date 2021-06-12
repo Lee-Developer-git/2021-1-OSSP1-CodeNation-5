@@ -2,7 +2,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const express = require('express');
-const auth = require('./auth');
 
 const app = express();
 
@@ -18,6 +17,7 @@ app.use(bodyParser.json());
 // 이후 데이터를 주고 받을 때 post방식을 사용하기 위한 초기 설정입니다. 무시하시면 됩니다.
 
 var mysql = require('mysql');
+const { is } = require('cheerio/lib/api/attributes');
 var connection = mysql.createConnection({
     host: 'management.ci2wee8elxtt.us-east-2.rds.amazonaws.com',
     port: '3306',
@@ -70,8 +70,53 @@ app.post('/api/search', async(req, res) => {
     });
 })
 
-app.post('/api/register', auth.register);
-app.post('/api/login', auth.login);
+app.post('/api/register', function(req, res) {
+    var body = req.body;
+
+    var user_name = body.user_name;
+    var user_id = body.user_id;
+    var user_pw = body.user_pw;
+
+    console.log("request register : " + user_name + " " + user_id + " " + user_pw);
+
+    let SQL = "INSERT INTO user_info (username, user_id, user_pw) VALUES (?, ?, ?)";
+    var params = [user_name, user_id, user_pw];
+    connection.query(SQL, params, function(error, results, fields) {
+        res.send({state:"success", message:"회원가입 되었습니다!"});
+    });
+});
+
+app.post('/api/register/checknickname', function(req, res) {
+    var user_name = req.body.user_name;
+
+    let SQL = "SELECT * FROM user_info WHERE username='" + user_name + "';"
+    connection.query(SQL,function(error, results, fields) {
+        if(JSON.stringify(results).length > 2)
+            res.send({state:"fail", message:"이미 존재하는 닉네임 입니다."});
+        else
+            res.send({state:"success", message:"사용 가능한 닉네임 입니다."});
+    });
+});
+
+app.post('/api/register/checkid', function(req, res) {
+    var user_id = req.body.user_id;
+
+    let SQL = "SELECT * FROM user_info WHERE user_id='" + user_id + "';"
+    connection.query(SQL,function(error, results, fields) {
+        if(JSON.stringify(results).length > 2)
+            res.send({state:"fail", message:"이미 존재하는 아이디 입니다."});
+        else
+            res.send({state:"success", message:"사용 가능한 아이디 입니다."});
+    });
+});
+
+app.post('/api/login', function(req, res) {
+    var body = req.body;
+    var user_id = body.user_id;
+    var user_pw = body.user_pw;
+
+    console.log(user_id + " " + user_pw);
+});
 
 app.listen(port, () => {
     console.log(`listening on port${port}`);

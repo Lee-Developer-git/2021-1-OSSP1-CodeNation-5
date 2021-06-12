@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
-import Search from '../components/Search';
-import Keyword from '../components/Keyword';
+import Search from '../components/keywords/Search';
+import Keyword from '../components/keywords/Keyword';
 import Register from '../components/Register';
 import Login from '../components/Login';
 
@@ -67,7 +67,7 @@ function Main() {
                         {keywords ? (
                             <div>
                                 {keywords.map(c => {
-                                return <Keyword key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
+                                return <Keyword cookie={cookies} key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
                                 })}
                             </div>
                         ):("")}

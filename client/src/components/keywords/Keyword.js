@@ -20,7 +20,7 @@ const style = makeStyles((theme)=>({
     },
 }));
 
-function Keyword({ one, two, trd, four, five, six }) {
+function Keyword({cookie, key, one, two, trd, four, five, six }) {
     const classes = style;
 
     const initialState ={
@@ -50,7 +50,7 @@ function Keyword({ one, two, trd, four, five, six }) {
     const handleChange = (e) => {
         setstate({
             material : e.target.value
-        });
+        });   
     };
 
     return(
@@ -112,17 +112,17 @@ function Keyword({ one, two, trd, four, five, six }) {
                         id: 'select-material'
                     }}
                 >
-                    <option aria-level="None" value="" />
+                    <option aria-label="None"/>
                     <option value="view">view</option>
                     <option value="image">image</option>
                 </Select>
             </FormControl>
-            {(material == 'view') ? (
-                <ViewMaterial/>
+            {(state.material === 'view') ? (
+                <ViewMaterial id={cookie.user_id}/>
                 ):(
                 <div>
-                {(material == 'image') ?(
-                    <ImageMaterial />
+                {(state.material === 'image') ?(
+                    <ImageMaterial id={cookie.user_id}/>
                 ): (
                     ""
                 )}

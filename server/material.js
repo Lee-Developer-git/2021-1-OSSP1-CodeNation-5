@@ -26,8 +26,9 @@ const getHTML = async (sel1, sel2) => {
     }
 };
 
-router.get('/common', async(req, res) => {
-    connection.query('SELECT * FROM common_material ORDER BY id DESC LIMIT 2', (err, rows, fields) => {
+router.get('/common/:id', async(req, res) => {
+    let SQL = "SELECT * FROM common_material WHERE user_id='" + req.params.id + "';";
+    connection.query(SQL, (err, rows, fields) => {
         res.send(rows);
     });
 });
@@ -74,8 +75,9 @@ const getImage = async(sel1, sel2) =>{
     }
 }
 
-router.get('/image', async(req, res) => {
-    connection.query('SELECT * FROM image_material ORDER BY id DESC LIMIT 2', (err, rows, fields) => {
+router.get('/image/:id', async(req, res) => {
+    let SQL = "SELECT * FROM image_material WHERE user_id='" + req.params.id + "';";
+    connection.query(SQL, (err, rows, fields) => {
         res.send(rows);
     });
 });

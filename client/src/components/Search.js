@@ -12,7 +12,7 @@ class Search extends React.Component{
     constructor(props) {
         super(props);
         this.state ={
-            keyword: ''
+            keyword: '',
         }
     }
 
@@ -53,9 +53,8 @@ class Search extends React.Component{
         }
         return post(url, JSON.stringify(data), config);
     };
+  
 
-
-    
     render(){
         return(
         <>
@@ -75,5 +74,5 @@ class Search extends React.Component{
     }
 }
 
-
 export default Search;
+

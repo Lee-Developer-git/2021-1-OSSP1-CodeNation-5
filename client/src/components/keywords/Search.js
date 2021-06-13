@@ -7,10 +7,10 @@ import Button from '@material-ui/core/Button';
 
 const style = {
     search: {
-        width: '80%',
+        width: '75%',
     },
     submit: {
-        width: '20px',
+        width: '15px',
     },
 };
 
@@ -82,7 +82,7 @@ class Search extends React.Component{
                     style={style.search}
                     onChange={this.onChange}
                     inputProps={{ 'aria-label': 'description' }}
-                />
+                />&nbsp;&nbsp;&nbsp;
                 <Button type="submit" variant="outlined" className={style.submit}>봇</Button>
             </Form>
         </>

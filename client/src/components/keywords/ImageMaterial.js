@@ -1,12 +1,12 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-function ImageMaterial(){
+function ImageMaterial({ image_link, user_id }){
 
     return(
         <div>
             <br/>
-            <div>자료</div>
-            <div>url: </div>
+            <div><img src={image_link} alt="image"/></div>
         </div>
     );
 }

@@ -33,8 +33,15 @@ router.get('/common/:id', async(req, res) => {
     });
 });
 
+router.get('/common', async(req, res) => {
+    let SQL = "SELECT * FROM common_material;";
+    connection.query(SQL, (err, rows, fields) => {
+        res.send(rows);
+    });
+});
+
 router.post('/common', async(req, res) => {
-    let SQL = 'INSERT INTO common_material VALUES (?, ?, "test", null)';
+    let SQL = "INSERT INTO common_material VALUES (?, ?, 'TEST1ID', null, ?, ?);";
     try{
         let sel1 = req.body.sel1;
         let sel2 = req.body.sel2;
@@ -82,10 +89,17 @@ router.get('/image/:id', async(req, res) => {
     });
 });
 
+router.get('/image', async(req, res) => {
+    let SQL = "SELECT * FROM image_material WHERE sel1='" + req.body.sel1 + "' AND sel2='" + req.body.sel2 +"';";
+    connection.query(SQL, (err, rows, fields) => {
+        res.send(rows);
+    });
+});
+
 app.use('/image',express.static('./image'));
 
 router.post('/image', upload.single('image'), async(req, res) => {
-    let SQL = 'INSERT INTO research VALUES (?, "test", null)';
+    let SQL = "INSERT INTO research VALUES (?, 'TEST1ID', null, ?, ?)";
     try {
         let sel1 = req.body.sel1;
         let sel2 = req.body.sel2;

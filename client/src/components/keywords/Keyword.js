@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from 'reactstrap';
 import ImageMaterial from './ImageMaterial';
 import ViewMaterial from './ViewMaterial';
@@ -32,10 +32,27 @@ function Keyword({ one, two, trd, four, five, six }) {
         btnSix: 'outlined',
     };
 
+    const initialmaterial = [{
+        sel1: '',
+        sel2: '',
+        material_name: '',
+        material_link: '',
+        user_id: 'TEST1ID'
+    }];
+
+    const initialimage = [{
+        sel1: '',
+        sel2: '',
+        image_link: '',
+        user_id: 'TEST1ID'
+    }]
+
     const [variant, setVarient] = useState(initialState);
     const [state, setstate] = useState({
         material: ""
     });
+    const [material, setmaterial] = useState(initialmaterial);
+    const [image, setimage] = useState(initialimage);
 
     const changeColor = (e) =>{
         setVarient({
@@ -52,6 +69,27 @@ function Keyword({ one, two, trd, four, five, six }) {
             material : e.target.value
         });   
     };
+
+    const callApiCommon = async () => {
+        const response = await fetch('http://localhost:5000/api/material/common');
+        const body = await response.json();
+        return body;
+    }
+
+    const callApiImage = async () => {
+        const response = await fetch('http://localhost:5000/api/material/image');
+        const body = await response.json();
+        return body;
+    }
+
+    useEffect(()=>{
+        try {
+            callApiCommon().then((res) =>setmaterial(res));
+            callApiImage().then((res) =>setimage(res));
+        } catch (error) {
+            console.log(error);
+        }
+    }) 
 
     return(
         <>
@@ -117,15 +155,42 @@ function Keyword({ one, two, trd, four, five, six }) {
                     <option value="image">image</option>
                 </Select>
             </FormControl>
-            {(state.material == 'view') ? (
-                <ViewMaterial/>
+            {(state.material === 'view') ? (
+                <>
+                    <div className={classes.name}>자료</div>
+                    {material ? (
+                        <div>
+                            {material.map(m =>{
+                                return <ViewMaterial
+                                        material_name={m.material_name}
+                                        material_link={m.material_link}
+                                        user_id={m.user_id}/>
+                            })}
+                        </div>
+                    ): (<div>
+                        
+                    </div>)}
+                </>
                 ):(
                 <div>
-                {(state.material == 'image') ?(
-                    <ImageMaterial />
-                ): (
-                    ""
-                )}
+                    {(state.material === 'image') ?(
+                        <>
+                            <div className={classes.name}>자료</div>
+                            {image ? (
+                                <div>
+                                    {image.map(m =>{
+                                        return <ImageMaterial
+                                                image_link={m.image_link}
+                                                user_id={m.user_id}/>
+                                    })}
+                                </div>
+                            ): (<div>
+                                None
+                            </div>)}
+                        </>
+                    ): (
+                        ""
+                    )}
                 </div>
             )}
         </>

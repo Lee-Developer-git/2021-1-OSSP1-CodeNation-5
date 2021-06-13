@@ -135,7 +135,7 @@ function Main() {
                                 </div>
                         ) : ("")}
                     </div>
-                </div><br/>
+                </div>
                 <div style={style.container}>
                     <Inputfilter /><br/>
                 </div>

@@ -14,7 +14,7 @@ function ViewMaterial({ material_name, material_link, user_id }){
 
     const [state, setstate] = useState("");
     return(
-        <div>
+        <div className={classes.root}>
             <br/>
             <div>title: {material_name}</div>
             <div>url: {material_link}</div>

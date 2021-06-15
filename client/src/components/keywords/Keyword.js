@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import { post } from 'axios';
 
 const style = makeStyles((theme)=>({
     none_click:{
@@ -20,6 +21,15 @@ const style = makeStyles((theme)=>({
     },
 }));
 
+const Styles ={
+    submit: {
+        backgroundColor: "#2DC8B4",
+        width : "100%",
+        textAlign: "center",
+        color: "#FEFFFF"
+    }
+};
+
 function Keyword({ one, two, trd, four, five, six }) {
     const classes = style;
 
@@ -31,22 +41,26 @@ function Keyword({ one, two, trd, four, five, six }) {
         btnFive: 'outlined',
         btnSix: 'outlined',
     };
+    
+    const initialselect = [{
+        sel1: '',
+        sel2: ''
+    }]
 
     const initialmaterial = [{
-        sel1: '',
-        sel2: '',
+        id: '',
         material_name: '',
         material_link: '',
         user_id: 'TEST1ID'
     }];
 
     const initialimage = [{
-        sel1: '',
-        sel2: '',
+        id: '',
         image_link: '',
         user_id: 'TEST1ID'
     }]
 
+    const [select, setselect] = useState(initialselect);
     const [variant, setVarient] = useState(initialState);
     const [state, setstate] = useState({
         material: ""
@@ -57,11 +71,42 @@ function Keyword({ one, two, trd, four, five, six }) {
     const changeColor = (e) =>{
         setVarient({
             ...variant,
-            [e.target.name] : 'contained'
+            [e.target.id] : 'contained'
         });
-        console.log(e.target.name);
-        console.log(e.target.variant);
         console.log(e.target.value);
+        if (select.sel1 === ''){
+            setselect({
+                ...select,
+                sel1 : e.target.value
+            })
+            console.log(e.target.value);
+        } else if (select.sel1 !== ''){
+            setselect({
+                ...select,
+                sel2 : e.target.value
+            })
+        }
+        console.log(e.target.id);
+    }
+
+    const addMaterial = () =>{
+        let sel = {};
+        sel[0] = select.sel1;
+        sel[1] = select.sel2;
+        const url = 'http://localhost:5000/api/material/common';
+        let data = {
+            "material_name" : "",
+            "material_link" : "",
+            "user_id" : "",
+            "sel1" : sel[0],
+            "sel2" : sel[1]
+        }
+        const config = {
+            headers: {
+                'content-type': 'application/json'
+            }
+        }
+        return post(url, JSON.stringify(data), config);
     }
 
     const handleChange = (e) => {
@@ -82,6 +127,21 @@ function Keyword({ one, two, trd, four, five, six }) {
         return body;
     }
 
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log(select.sel1);
+        console.log(select.sel2);
+        addMaterial()
+            .then((response)=>{
+                console.log(response.data);
+            })
+        setselect({
+            ...select,
+            sel1: '',
+            sel2: ''
+        })
+    }
+
     useEffect(()=>{
         try {
             callApiCommon().then((res) =>setmaterial(res));
@@ -89,55 +149,60 @@ function Keyword({ one, two, trd, four, five, six }) {
         } catch (error) {
             console.log(error);
         }
-    }) 
+    })
 
     return(
         <>
-            <Form >
+            <Form onSubmit={onSubmit}>
                 <Button
                     id="btnOne"
-                    name="btnOne"
+                    name={variant.btnOne}
                     variant={variant.btnOne}
                     color="primary"
                     style={classes.none_click}
                     onClick={changeColor}
-                    value={variant.btnOne}>{one}</Button>
+                    value={one}>{one}</Button>
                 <Button
                     id="btnTwo"
-                    name="btnTwo"
+                    name={variant.btnTwo}
                     variant={variant.btnTwo}
                     color="primary"
                     style={classes.none_click}
-                    onClick={changeColor}>{two}</Button>
+                    onClick={changeColor}
+                    value={two}>{two}</Button>
                 <Button
                     id="btnTrd"
-                    name="btnTrd"
+                    name={variant.btnTrd}
                     variant={variant.btnTrd}
                     color="primary"
                     style={classes.none_click}
-                    onClick={changeColor}>{trd}</Button>
+                    onClick={changeColor}
+                    value={trd}>{trd}</Button>
                 <Button
                     id="btnFour"
-                    name="btnFour"
+                    name={variant.btnFour}
                     variant={variant.btnFour}
                     color="primary"
                     style={classes.none_click}
-                    onClick={changeColor}>{four}</Button>
+                    onClick={changeColor}
+                    value={four}>{four}</Button>
                 <Button
                     id="btnFive"
-                    name="btnFive"
+                    name={variant.btnFive}
                     variant={variant.btnFive}
                     color="primary"
                     style={classes.none_click}
-                    onClick={changeColor}>{five}</Button>
+                    onClick={changeColor}
+                    value={five}>{five}</Button>
                 <Button
                     id="btnSix"
-                    name="btnSix"
+                    name={variant.btnSix}
                     variant={variant.btnSix}
                     color="primary"
                     style={classes.none_click}
-                    onClick={changeColor}>{six}</Button><br/><br/>
-                <Button type="submit" variant="contained" color="primary" style={{ width:"100%" }}>검색</Button>
+                    onClick={changeColor}
+                    value={six}>{six}</Button><br/><br/>
+                <Button type="submit" style={Styles.submit}>검색</Button>
             </Form>
             <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="select-material">자료형</InputLabel>
@@ -157,11 +222,12 @@ function Keyword({ one, two, trd, four, five, six }) {
             </FormControl>
             {(state.material === 'view') ? (
                 <>
-                    <div className={classes.name}>자료</div>
+                    <div>자료</div>
                     {material ? (
                         <div>
                             {material.map(m =>{
                                 return <ViewMaterial
+                                        key={m.id}
                                         material_name={m.material_name}
                                         material_link={m.material_link}
                                         user_id={m.user_id}/>
@@ -175,11 +241,12 @@ function Keyword({ one, two, trd, four, five, six }) {
                 <div>
                     {(state.material === 'image') ?(
                         <>
-                            <div className={classes.name}>자료</div>
+                            <div>자료</div>
                             {image ? (
                                 <div>
                                     {image.map(m =>{
                                         return <ImageMaterial
+                                                key={m.id}
                                                 image_link={m.image_link}
                                                 user_id={m.user_id}/>
                                     })}

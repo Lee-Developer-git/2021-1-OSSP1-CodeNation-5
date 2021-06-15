@@ -50,16 +50,16 @@ router.post('/common', async(req, res) => {
         const $List = $('.f_link_b');
 
         let lists = [];
-            $List.each((idx, node)=>{
-                lists.push({
-                    material_name: $(node).text(),
-                    material_url: $(node).attr('href')
-                });
+        $List.each((idx, node)=>{
+            lists.push({
+                material_name: $(node).text(),
+                material_url: $(node).attr('href')
             });
+        });
         var jsonString = JSON.stringify(lists);
         var jsonData = JSON.parse(jsonString);
         var jsonLength = Object.keys(jsonData).length;
-        for(i=0; i<4; i++){
+        for(i=0; i<jsonLength; i++){
             var material_name = jsonData[i].material_name;
             var material_url = jsonData[i].material_url;
             let params = [material_name, material_url];
@@ -90,7 +90,7 @@ router.get('/image/:id', async(req, res) => {
 });
 
 router.get('/image', async(req, res) => {
-    let SQL = "SELECT * FROM image_material WHERE sel1='" + req.body.sel1 + "' AND sel2='" + req.body.sel2 +"';";
+    let SQL = "SELECT * FROM image_material;";
     connection.query(SQL, (err, rows, fields) => {
         res.send(rows);
     });

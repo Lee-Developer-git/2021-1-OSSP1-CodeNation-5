@@ -83,7 +83,7 @@ class Search extends React.Component{
                     onChange={this.onChange}
                     inputProps={{ 'aria-label': 'description' }}
                 />&nbsp;&nbsp;&nbsp;
-                <Button type="submit" variant="outlined" className={style.submit}>봇</Button>
+                <Button type="submit" variant="outlined" style={style.submit}>봇</Button>
             </Form>
         </>
         );

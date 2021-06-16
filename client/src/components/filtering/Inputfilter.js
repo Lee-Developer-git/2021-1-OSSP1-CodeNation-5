@@ -90,9 +90,7 @@ function Inputfilter() {
                     onChange={onChange}
                 />
                 <label htmlFor="button-file">
-                    <Button variant="contained" color="primary" component="span">
-                    Upload
-                    </Button>
+                    <input type="file" />
                 </label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button type="submit" variant="outlined">봇</Button>

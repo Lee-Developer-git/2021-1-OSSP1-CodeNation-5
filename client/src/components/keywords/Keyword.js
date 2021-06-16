@@ -74,13 +74,13 @@ function Keyword({ one, two, trd, four, five, six }) {
             [e.target.id] : 'contained'
         });
         console.log(e.target.value);
-        if (select.sel1 === ''){
+        if (select.sel1 === undefined){
             setselect({
                 ...select,
                 sel1 : e.target.value
             })
             console.log(e.target.value);
-        } else if (select.sel1 !== ''){
+        } else if (select.sel1 !== undefined){
             setselect({
                 ...select,
                 sel2 : e.target.value
@@ -109,6 +109,25 @@ function Keyword({ one, two, trd, four, five, six }) {
         return post(url, JSON.stringify(data), config);
     }
 
+    const addImage = () =>{
+        let sel = {};
+        sel[0] = select.sel1;
+        sel[1] = select.sel2;
+        const url = 'http://localhost:5000/api/material/image';
+        const formData = new FormData();
+        formData.append('image_link', '');
+        formData.append('user_id', '');
+        formData.append('id', '');
+        formData.append('sel1', sel[0]);
+        formData.append('sel2', sel[1]);
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        return post(url, formData, config);
+    }
+
     const handleChange = (e) => {
         setstate({
             material : e.target.value
@@ -129,9 +148,11 @@ function Keyword({ one, two, trd, four, five, six }) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(select.sel1);
-        console.log(select.sel2);
         addMaterial()
+            .then((response)=>{
+                console.log(response.data);
+            });
+        addImage()
             .then((response)=>{
                 console.log(response.data);
             })
@@ -222,7 +243,6 @@ function Keyword({ one, two, trd, four, five, six }) {
             </FormControl>
             {(state.material === 'view') ? (
                 <>
-                    <div>자료</div>
                     {material ? (
                         <div>
                             {material.map(m =>{
@@ -241,7 +261,6 @@ function Keyword({ one, two, trd, four, five, six }) {
                 <div>
                     {(state.material === 'image') ?(
                         <>
-                            <div>자료</div>
                             {image ? (
                                 <div>
                                     {image.map(m =>{

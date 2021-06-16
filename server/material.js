@@ -12,7 +12,9 @@ var connection = mysql.createConnection({
     user: 'user',
     password: '44596155',
     database: 'codenation',
+    multipleStatements: true
 });
+connection.connect();
 
 const multer = require('multer');
 const upload = multer({ dest: './image' });
@@ -34,14 +36,14 @@ router.get('/common/:id', async(req, res) => {
 });
 
 router.get('/common', async(req, res) => {
-    let SQL = "SELECT * FROM common_material;";
+    let SQL = "SELECT * FROM common_material ORDER BY id DESC LIMIT 4;";
     connection.query(SQL, (err, rows, fields) => {
         res.send(rows);
     });
 });
 
 router.post('/common', async(req, res) => {
-    let SQL = "INSERT INTO common_material VALUES (?, ?, 'TEST1ID', null, ?, ?);";
+    let SQL = "INSERT INTO common_material(material_name, material_link, user_id, id, sel1, sel2) VALUES (?, ?, ?, ?, ?, ?);";
     try{
         let sel1 = req.body.sel1;
         let sel2 = req.body.sel2;
@@ -58,15 +60,15 @@ router.post('/common', async(req, res) => {
         });
         var jsonString = JSON.stringify(lists);
         var jsonData = JSON.parse(jsonString);
-        var jsonLength = Object.keys(jsonData).length;
-        for(i=0; i<jsonLength; i++){
-            var material_name = jsonData[i].material_name;
-            var material_url = jsonData[i].material_url;
-            let params = [material_name, material_url];
-            connection.query(SQL, params, (err, rows, fields)=>{
-                res.send(rows);
-            });
+        var SQLS = "";
+        for(i=0; i<4; i++){
+            var materialname = jsonData[i].material_name;
+            var materialurl = jsonData[i].material_url;
+            SQLS += mysql.format(SQL, [materialname, materialurl, 'TEST1ID', null, sel1, sel2]);
         }
+        connection.query(SQLS, (err, rows, fields)=>{
+            res.send(rows);
+        });
     } catch(e){
         console.log(e);
         res.json({ msg: "no files"});
@@ -99,13 +101,13 @@ router.get('/image', async(req, res) => {
 app.use('/image',express.static('./image'));
 
 router.post('/image', upload.single('image'), async(req, res) => {
-    let SQL = "INSERT INTO research VALUES (?, 'TEST1ID', null, ?, ?)";
+    let SQL = "INSERT INTO image_material(image_link, user_id, id, sel1, sel2) VALUES (?, ?, ?, ?, ?);";
     try {
         let sel1 = req.body.sel1;
         let sel2 = req.body.sel2;
         const photo = await getImage(sel1, sel2);
         const $ = cheerio.load(photo.data);
-        const $List = $('img');
+        const $List = $('.thumb_img');
 
         let lists = [];
             $List.each((idx, node)=>{
@@ -113,13 +115,15 @@ router.post('/image', upload.single('image'), async(req, res) => {
             });
         var jsonString = JSON.stringify(lists);
         var jsonData = JSON.parse(jsonString);
+        var SQLS = "";
         for(i=0; i<4; i++){
             var image = jsonData[i];
-            let params = [image];
-            connection.query(SQL, params, (err, rows, fields)=>{
-                res.send(rows);
-            });
+            SQLS += mysql.format(SQL, [image, 'TEST1ID', null, sel1, sel2]);
         }
+        console.log(SQLS);
+        connection.query(SQLS, (err, rows, fields)=>{
+            res.send(rows);
+        });
     } catch (e) {
         console.log(e);
         res.json({ msg: "no images"});

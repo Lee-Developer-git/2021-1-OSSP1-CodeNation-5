@@ -69,7 +69,10 @@ function Inputfilter() {
         const filepath = state.filepath;
         const value = filter.filepath;
         if(e.target.value == '1.사무자동화산업기사필기_핵심요점정리.pdf'){
-
+            setstate({
+                ...state,
+                
+            })
         } else if (e.target.value == '2.codenation_발표자료.pptx'){
 
         } else if (e.target.value == '3.홍보전략론'){

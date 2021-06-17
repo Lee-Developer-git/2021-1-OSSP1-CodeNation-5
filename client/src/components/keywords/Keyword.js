@@ -30,7 +30,7 @@ const Styles ={
     }
 };
 
-function Keyword({ one, two, trd, four, five, six }) {
+function Keyword({ key, id, one, two, trd, four, five, six }) {
     const classes = style;
 
     const initialState ={
@@ -250,7 +250,9 @@ function Keyword({ one, two, trd, four, five, six }) {
                                         key={m.id}
                                         material_name={m.material_name}
                                         material_link={m.material_link}
-                                        user_id={m.user_id}/>
+                                        user_id={id}
+                                        sel1={select.sel1}
+                                        sel2={select.sel2}/>
                             })}
                         </div>
                     ): (<div>
@@ -267,7 +269,9 @@ function Keyword({ one, two, trd, four, five, six }) {
                                         return <ImageMaterial
                                                 key={m.id}
                                                 image_link={m.image_link}
-                                                user_id={m.user_id}/>
+                                                user_id={id}
+                                                sel1={select.sel1}
+                                                sel2={select.sel2}/>
                                     })}
                                 </div>
                             ): (<div>

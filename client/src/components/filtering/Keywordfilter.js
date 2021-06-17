@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from 'reactstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -138,7 +138,7 @@ function Keywordfilter({ keyword1, keyword2, keyword3, keyword4, keyword5 }){
         } catch (error) {
             console.log(error);
         }
-    })
+    }, [material, image])
 
 
 

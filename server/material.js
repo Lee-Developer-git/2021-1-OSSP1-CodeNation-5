@@ -17,6 +17,7 @@ var connection = mysql.createConnection({
 connection.connect();
 
 const multer = require('multer');
+const { request } = require('express');
 const upload = multer({ dest: './image' });
 
 //자료 가져오기
@@ -40,6 +41,14 @@ router.get('/common', async(req, res) => {
     connection.query(SQL, (err, rows, fields) => {
         res.send(rows);
     });
+});
+
+router.post('/common/save', async(req, res) => {
+    let SQL = "UPDATE common_material SET user_id='" + req.body.user_id + "' WHERE material_link='" + req.body.material_link + "';";
+    connection.query(SQL, (err, rows, fields) => {
+        console.log("common save\n"+req.body.user_id+" "+req.body.material_link);
+        res.send({message: "success"});
+    }) 
 });
 
 router.post('/common', async(req, res) => {
@@ -99,6 +108,14 @@ router.get('/image', async(req, res) => {
 });
 
 app.use('/image',express.static('./image'));
+
+router.post('/image/save', async(req, res) => {
+    let SQL = "UPDATE image_material SET user_id='" + req.body.user_id + "' WHERE image_link='" + req.body.image_link + "';";
+    connection.query(SQL, (err, rows, fields) => {
+        console.log("image save\n"+rows);
+        res.send({message: "success"});
+    }) 
+});
 
 router.post('/image', upload.single('image'), async(req, res) => {
     let SQL = "INSERT INTO image_material(image_link, user_id, id, sel1, sel2) VALUES (?, ?, ?, ?, ?);";

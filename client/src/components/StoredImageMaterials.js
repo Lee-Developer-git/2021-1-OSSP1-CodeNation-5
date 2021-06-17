@@ -1,4 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+
+const useStyles = makeStyles({
+    root: {
+        minWidth: 275,
+    },
+    bullet: {
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
+    },
+    pos: {
+        marginBottom: 12,
+    },
+});
 
 function StoredImageMaterial({id}){
     const [data, setData] = useState([]);
@@ -11,12 +29,24 @@ function StoredImageMaterial({id}){
             });
     }, []);
 
-    const dataList = data.map(e => <li key={e.user_id}>image_url: {e.image_link}<br/></li>);
+    const dataList = data.map(e => 
+        <Card className={useStyles.root} variant="outlined">
+            <CardContent>
+                <Typography className={useStyles.pos}>
+                    <img src={e.image_link} alt="img_tag"/>
+                </Typography>
+            </CardContent>
+        </Card>);
 
     return(
         <div>
             <br/>
-            <h4>이미지 자료목록</h4>
+            <div>
+                {(dataList.length === 0) ?
+                    <h4>저장된 자료가 없습니다.</h4>
+                    : <h4>자료목록</h4>
+                }
+            </div>
             <ul>{dataList}</ul>
         </div>
     );

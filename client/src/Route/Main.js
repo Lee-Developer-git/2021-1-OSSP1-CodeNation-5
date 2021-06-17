@@ -119,7 +119,7 @@ function Main() {
                         {keywords ? (
                             <div>
                                 {keywords.map(c => {
-                                return <Keyword key={c.id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
+                                return <Keyword key={c.id} id={cookies.user_id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
                                 })}
                             </div>
                         ):(

@@ -12,6 +12,7 @@ import Register from '../components/Register';
 import Login from '../components/Login';
 import StoredCommonMaterial from '../components/StoredCommonMaterial';
 import StoredImageMaterial from '../components/StoredImageMaterials';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const form_style = makeStyles((theme)=>({
     formControl: {
@@ -19,6 +20,15 @@ const form_style = makeStyles((theme)=>({
         minWidth: 400,
     },
 }));
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      '& > * + *': {
+        marginLeft: theme.spacing(2),
+      },
+    },
+  }));
 
 const style = {
     main: {
@@ -36,6 +46,7 @@ const style = {
 };
 
 function Main() {
+    const classes = useStyles();
     const initialValue =[{
         id: '',
         keyword:'',
@@ -47,6 +58,7 @@ function Main() {
         six:''
     }];
 
+    const [complete, setcomplete] = useState(0);
     const [keywords, setKeywords] = useState(initialValue);
     const [form, setValues] = useState(initialValue.keyword);
     const [stored_btn_value, setBtnValue] = useState("저장된 자료 열람 ▼");
@@ -64,11 +76,19 @@ function Main() {
 
     useEffect(() => {
         try {
-            callApi().then((res) => setKeywords(res));
+            fetch('http://localhost:5000/api/search')
+                .then((res) =>{
+                    return res.json();
+                })
+                .then((res)=>{
+                    setKeywords(res)
+                })
+            const timer = setInterval(()=> setcomplete({ complete : complete >= 100 ? 0 : complete + 1 }), 20);
+            return () => clearInterval(timer);
         } catch (e) {
             console.log(e);
         }
-    });
+    }, [keywords]);
 
     var handleOnLogout = function(e){
         removeCookie('auth_state');
@@ -102,7 +122,11 @@ function Main() {
                                 return <Keyword key={c.id} id={cookies.user_id} one={c.one} two={c.two} trd={c.trd} four={c.four} five={c.five} six={c.six}/>
                                 })}
                             </div>
-                        ):("")}
+                        ):(
+                            <>
+                                <CircularProgress variant="determinate" value={complete}/>
+                            </>
+                        )}
                     </div>
                     <div>
                         <Button variant="contained" color="primary" style={{ width:"100%", margin:"20px 0px 10px 0px"}} onClick={handleShowStoredMaterial}>{stored_btn_value}</Button>

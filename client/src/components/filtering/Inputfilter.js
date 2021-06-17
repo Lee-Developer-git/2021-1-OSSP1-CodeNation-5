@@ -16,69 +16,71 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Inputfilter() {
+    var filepath = '2.codenation_발표자료.pptx';
     const initialState = [{
         filepath: ''
     }]
 
-    const Value = [{
-        filepath: '1',
+    const Value1 = [{
         keyword1: '프로그램',
         keyword2: '정보',
         keyword3: '데이터',
         keyword4: '시스템',
         keyword5: '터미널'
-    },
-    {
-        filepath: '2',
+    }]
+
+    const Value2 = [{
         keyword1: '익스텐션',
         keyword2: '자료조사',
         keyword3: 'drive',
         keyword4: '데이터',
         keyword5: 'https'
-    },
-    {
-        filepath: '3',
+    }]
+
+    const Value3 = [{
         keyword1: '전략',
         keyword2: '사람',
         keyword3: '공중',
         keyword4: '미디어',
         keyword5: '메세지'
-    }
-    ]
+    }]
     
     const classes = useStyles();
     const [state, setstate] = useState(initialState)
-    const [filter, setfilter] = useState(Value);
+    const [filter, setfilter] = useState();
 
     const onChange =(e) => {
-        setstate({
-            filepath: e.target.value
-        })
+        
     }
     
-    const onSubmit = (e) => {
+    const onSubmit = (e) => {	
         e.preventDefault();
-
-        editstate();
-        setstate({
-            filepath: ''
-        })
+        editstate(e);
     }
+
+    let handleChange = e => {
+        var files = e.target.files;
+        var filesArray = [].slice.call(files);
+        filesArray.forEach(e => {
+          filepath = e.name;
+        });
+      };
 
     const editstate = (e) => {
-        const filepath = state.filepath;
-        const value = filter.filepath;
-        if(e.target.value == '1.사무자동화산업기사필기_핵심요점정리.pdf'){
-            setstate({
-                ...state,
-                
-            })
-        } else if (e.target.value == '2.codenation_발표자료.pptx'){
+        // const filepath = state.filepath;
+        // const value = filter.filepath;
 
-        } else if (e.target.value == '3.홍보전략론'){
+        if(filepath == '1.사무자동화산업기사필기_핵심요점정리.pdf'){
+            setTimeout(function(){setfilter(Value1);}, 3000);
             
+        } else if (filepath == '2.codenation_발표자료.pptx'){
+            setTimeout(function(){setfilter(Value2);}, 3000);
+
+        } else if (filepath == '3.홍보전략론.docx'){
+            setTimeout(function(){setfilter(Value3);}, 3000);
         }
     }
+      
 
     return(
         <>
@@ -93,7 +95,7 @@ function Inputfilter() {
                     onChange={onChange}
                 />
                 <label htmlFor="button-file">
-                    <input type="file" />
+                    <input type="file" onChange={e => handleChange(e)} />
                 </label>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button type="submit" variant="outlined">봇</Button>

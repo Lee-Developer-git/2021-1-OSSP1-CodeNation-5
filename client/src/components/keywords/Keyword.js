@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import { post } from 'axios';
+import KeywordButton from './KeywordButton';
 
 const style = makeStyles((theme)=>({
     none_click:{
@@ -33,20 +33,6 @@ const Styles ={
 function Keyword({ key, id, one, two, trd, four, five, six }) {
     const classes = style;
 
-    const initialState ={
-        btnOne: 'outlined',
-        btnTwo: 'outlined',
-        btnTrd: 'outlined',
-        btnFour: 'outlined',
-        btnFive: 'outlined',
-        btnSix: 'outlined',
-    };
-    
-    const initialselect = [{
-        sel1: '',
-        sel2: ''
-    }]
-
     const initialmaterial = [{
         id: '',
         material_name: '',
@@ -58,81 +44,13 @@ function Keyword({ key, id, one, two, trd, four, five, six }) {
         id: '',
         image_link: '',
         user_id: 'TEST1ID'
-    }]
-
-    const [select, setselect] = useState(initialselect);
-    const [variant, setVarient] = useState(initialState);
+    }];
+    
     const [state, setstate] = useState({
         material: ""
     });
     const [material, setmaterial] = useState(initialmaterial);
     const [image, setimage] = useState(initialimage);
-
-    const changeColor = (e) =>{
-        setVarient({
-            ...variant,
-            [e.target.id] : 'contained'
-        });
-        console.log(e.target.value);
-        if (select.sel1 === undefined){
-            setselect({
-                ...select,
-                sel1 : e.target.value
-            })
-            console.log(e.target.value);
-        } else if (select.sel1 !== undefined){
-            setselect({
-                ...select,
-                sel2 : e.target.value
-            })
-        }
-        console.log(e.target.id);
-    }
-
-    const addMaterial = () =>{
-        let sel = {};
-        sel[0] = select.sel1;
-        sel[1] = select.sel2;
-        const url = 'http://localhost:5000/api/material/common';
-        let data = {
-            "material_name" : "",
-            "material_link" : "",
-            "user_id" : "",
-            "sel1" : sel[0],
-            "sel2" : sel[1]
-        }
-        const config = {
-            headers: {
-                'content-type': 'application/json'
-            }
-        }
-        return post(url, JSON.stringify(data), config);
-    }
-
-    const addImage = () =>{
-        let sel = {};
-        sel[0] = select.sel1;
-        sel[1] = select.sel2;
-        const url = 'http://localhost:5000/api/material/image';
-        const formData = new FormData();
-        formData.append('image_link', '');
-        formData.append('user_id', '');
-        formData.append('id', '');
-        formData.append('sel1', sel[0]);
-        formData.append('sel2', sel[1]);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        return post(url, formData, config);
-    }
-
-    const handleChange = (e) => {
-        setstate({
-            material : e.target.value
-        });   
-    };
 
     const callApiCommon = async () => {
         const response = await fetch('http://localhost:5000/api/material/common');
@@ -146,27 +64,18 @@ function Keyword({ key, id, one, two, trd, four, five, six }) {
         return body;
     }
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        addMaterial()
-            .then((response)=>{
-                console.log(response.data);
-            });
-        addImage()
-            .then((response)=>{
-                console.log(response.data);
-            })
-        setselect({
-            ...select,
-            sel1: '',
-            sel2: ''
-        })
-    }
+    const handleChange = (e) => {
+        setstate({
+            material : e.target.value
+        });   
+    };
 
     useEffect(()=>{
         try {
-            callApiCommon().then((res) =>setmaterial(res));
-            callApiImage().then((res) =>setimage(res));
+            callApiCommon()
+                .then((res) =>setmaterial(res));
+            callApiImage()
+                .then((res) =>setimage(res));
         } catch (error) {
             console.log(error);
         }
@@ -174,57 +83,7 @@ function Keyword({ key, id, one, two, trd, four, five, six }) {
 
     return(
         <>
-            <Form onSubmit={onSubmit}>
-                <Button
-                    id="btnOne"
-                    name={variant.btnOne}
-                    variant={variant.btnOne}
-                    color="primary"
-                    style={classes.none_click}
-                    onClick={changeColor}
-                    value={one}>{one}</Button>
-                <Button
-                    id="btnTwo"
-                    name={variant.btnTwo}
-                    variant={variant.btnTwo}
-                    color="primary"
-                    style={classes.none_click}
-                    onClick={changeColor}
-                    value={two}>{two}</Button>
-                <Button
-                    id="btnTrd"
-                    name={variant.btnTrd}
-                    variant={variant.btnTrd}
-                    color="primary"
-                    style={classes.none_click}
-                    onClick={changeColor}
-                    value={trd}>{trd}</Button>
-                <Button
-                    id="btnFour"
-                    name={variant.btnFour}
-                    variant={variant.btnFour}
-                    color="primary"
-                    style={classes.none_click}
-                    onClick={changeColor}
-                    value={four}>{four}</Button>
-                <Button
-                    id="btnFive"
-                    name={variant.btnFive}
-                    variant={variant.btnFive}
-                    color="primary"
-                    style={classes.none_click}
-                    onClick={changeColor}
-                    value={five}>{five}</Button>
-                <Button
-                    id="btnSix"
-                    name={variant.btnSix}
-                    variant={variant.btnSix}
-                    color="primary"
-                    style={classes.none_click}
-                    onClick={changeColor}
-                    value={six}>{six}</Button><br/><br/>
-                <Button type="submit" style={Styles.submit}>검색</Button>
-            </Form>
+            <KeywordButton one={one} two={two} trd={trd} four={four} five={five} six={six}/>
             <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="select-material">자료형</InputLabel>
                 <Select

@@ -25,7 +25,7 @@ const style = makeStyles((theme)=>({
     },
 }));
 
-function KeywordButton({ one, two, trd, four, five, six }) {
+function KeywordButton({p_setSelect, one, two, trd, four, five, six }) {
     const classes = style;
 
     const initialState ={
@@ -94,12 +94,24 @@ function KeywordButton({ one, two, trd, four, five, six }) {
                 ...select,
                 sel1 : e.target.value
             })
+            p_setSelect(
+                {
+                    ...select,
+                    sel1 : e.target.value
+                }
+            )
             console.log(e.target.value);
         } else if (select.sel1 !== undefined){
             setselect({
                 ...select,
                 sel2 : e.target.value
             })
+            p_setSelect(
+                {
+                    ...select,
+                    sel2 : e.target.value
+                }
+            )
         }
         console.log(e.target.id);
     }
@@ -119,6 +131,13 @@ function KeywordButton({ one, two, trd, four, five, six }) {
             sel1: '',
             sel2: ''
         })
+        p_setSelect(
+            {
+                ...select,
+                sel1 : '',
+                sel2 : ''
+            }
+        )
     }
     
     return(

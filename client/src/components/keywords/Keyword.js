@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'reactstrap';
 import ImageMaterial from './ImageMaterial';
 import ViewMaterial from './ViewMaterial';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -30,7 +28,7 @@ const Styles ={
     }
 };
 
-function Keyword({ one, two, trd, four, five, six }) {
+function Keyword({ key, id, one, two, trd, four, five, six }) {
     const classes = style;
 
     const initialmaterial = [{
@@ -46,6 +44,12 @@ function Keyword({ one, two, trd, four, five, six }) {
         user_id: 'TEST1ID'
     }];
     
+    const initialselect = [{
+        sel1: '',
+        sel2: ''
+    }];
+
+    const [select, setselect] = useState(initialselect);
     const [state, setstate] = useState({
         material: ""
     });
@@ -83,7 +87,7 @@ function Keyword({ one, two, trd, four, five, six }) {
 
     return(
         <>
-            <KeywordButton one={one} two={two} trd={trd} four={four} five={five} six={six}/>
+            <KeywordButton p_setSelect={setselect} one={one} two={two} trd={trd} four={four} five={five} six={six}/>
             <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="select-material">자료형</InputLabel>
                 <Select
@@ -109,7 +113,9 @@ function Keyword({ one, two, trd, four, five, six }) {
                                         key={m.id}
                                         material_name={m.material_name}
                                         material_link={m.material_link}
-                                        user_id={m.user_id}/>
+                                        user_id={id}
+                                        sel1={select.sel1}
+                                        sel2={select.sel2}/>
                             })}
                         </div>
                     ): (<div>
@@ -126,7 +132,9 @@ function Keyword({ one, two, trd, four, five, six }) {
                                         return <ImageMaterial
                                                 key={m.id}
                                                 image_link={m.image_link}
-                                                user_id={m.user_id}/>
+                                                user_id={id}
+                                                sel1={select.sel1}
+                                                sel2={select.sel2}/>
                                     })}
                                 </div>
                             ): (<div>

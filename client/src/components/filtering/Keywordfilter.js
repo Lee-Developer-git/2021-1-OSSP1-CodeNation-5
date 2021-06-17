@@ -138,7 +138,7 @@ function Keywordfilter({ keyword1, keyword2, keyword3, keyword4, keyword5 }){
         } catch (error) {
             console.log(error);
         }
-    })
+    }, [material, image])
 
 
 

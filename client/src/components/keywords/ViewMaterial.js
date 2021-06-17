@@ -20,8 +20,26 @@ const useStyles = makeStyles({
     },
 });
 
-function ViewMaterial({ material_name, material_link, user_id }){
+function ViewMaterial({key, material_name, material_link, user_id, sel1, sel2 }){
     const classes = useStyles();
+
+    var onClickSave = (e) => {
+        fetch('http://localhost:5000/api/material/common/save', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                "material_name": material_name,
+                "material_link": material_link,
+                "user_id": user_id,
+                "sel1": sel1,
+                "sel2": sel2,
+            }),
+        })
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+        });
+    }
 
     return(
         <div >
@@ -35,7 +53,7 @@ function ViewMaterial({ material_name, material_link, user_id }){
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button>저장</Button>
+                    <Button onClick={onClickSave}>저장</Button>
                 </CardActions>
             </Card>
         </div>

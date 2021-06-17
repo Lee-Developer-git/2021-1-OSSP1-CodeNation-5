@@ -39,6 +39,7 @@ client/build/manifest.json에 default browser설정이 없다면 다음과 같�
 - client/build폴더를 업로드한다.
 
 ## 자료조사봇
+<img src="./image/searchBot.png" width="500" height="600"></img>
 
 ## 실행화면
 1. 검색어 키워드 추출 기능  

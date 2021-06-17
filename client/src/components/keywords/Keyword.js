@@ -165,7 +165,8 @@ function Keyword({ one, two, trd, four, five, six }) {
 
     useEffect(()=>{
         try {
-            callApiCommon().then((res) =>setmaterial(res));
+            callApiCommon()
+                .then((res) =>setmaterial(res));
             callApiImage().then((res) =>setimage(res));
         } catch (error) {
             console.log(error);

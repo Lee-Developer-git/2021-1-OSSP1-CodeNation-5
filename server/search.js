@@ -21,16 +21,18 @@ const getHTML = async (keyword) => {
     }
 };
 
-router.get('/', async(req, res) => {
-    connection.query('SELECT * FROM search ORDER BY id DESC LIMIT 1', (err, rows, fields) => {
+router.get('/:id', async(req, res) => {
+    connection.query("SELECT * FROM search ORDER BY id DESC LIMIT 1 WHERE user_id='" + req.body.id + "';", (err, rows, fields) => {
         res.send(rows);
+        console.log(rows);
     });
 });
 
 // 키워드 추출, 데이터베이스에 저장
-router.post('/', async(req, res) => {
+router.post('/:id', async(req, res) => {
     let SQL = 'INSERT INTO search VALUES (null, ?, ?, ?, ?, ?, ?, ?)';
     let keyword = req.body.keyword;
+    let user_id = req.body.id;
     const html = await getHTML(keyword);
     const $ = cheerio.load(html.data);
     const $keywordList = $('.keyword');
@@ -46,7 +48,7 @@ router.post('/', async(req, res) => {
     let four = jsonData[3];
     let five = jsonData[4];
     let six = jsonData[5];
-    let params = [keyword, one, two, trd, four, five, six];
+    let params = [keyword, one, two, trd, four, five, six, user_id];
     connection.query(SQL, params, (err, rows, fields)=>{
         res.send(rows);
     });

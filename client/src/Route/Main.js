@@ -76,13 +76,19 @@ function Main() {
 
     useEffect(() => {
         try {
-            callApi().then((res) => setKeywords(res));
+            fetch('http://localhost:5000/api/search')
+                .then((res) =>{
+                    return res.json();
+                })
+                .then((res)=>{
+                    setKeywords(res)
+                })
             const timer = setInterval(()=> setcomplete({ complete : complete >= 100 ? 0 : complete + 1 }), 20);
             return () => clearInterval(timer);
         } catch (e) {
             console.log(e);
         }
-    }, []);
+    }, [keywords]);
 
     var handleOnLogout = function(e){
         removeCookie('auth_state');
@@ -154,9 +160,9 @@ function Main() {
                         ) : ("")}
                     </div>
                 </div>
-                {/* <div style={style.container}>
+                <div style={style.container}>
                     <Inputfilter /><br/>
-                </div> */}
+                </div>
             </div>
         );
     } else if(cookies.is_register_page) {

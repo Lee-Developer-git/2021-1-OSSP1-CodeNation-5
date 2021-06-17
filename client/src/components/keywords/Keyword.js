@@ -83,7 +83,7 @@ function Keyword({ key, id, one, two, trd, four, five, six }) {
         } catch (error) {
             console.log(error);
         }
-    })
+    }, [])
 
     return(
         <>

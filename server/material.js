@@ -87,7 +87,7 @@ router.post('/common', async(req, res) => {
 // 사진 가져오기
 const getImage = async(sel1, sel2) =>{
     try {
-        return await axios.get('https://search.daum.net/search?w=img&nil_search=btn&DA=NTB&enc=utf8&q=' + encodeURI(sel1) + '%26%26'+ encodeURI(sel2));
+        return await axios.get('https://search.naver.com/search.naver?where=image&sm=tab_jum&query=' + encodeURI(sel1) + '%26%26'+ encodeURI(sel2));
     } catch (e) {
         console.log(e);
     }
@@ -124,7 +124,7 @@ router.post('/image', upload.single('image'), async(req, res) => {
         let sel2 = req.body.sel2;
         const photo = await getImage(sel1, sel2);
         const $ = cheerio.load(photo.data);
-        const $List = $('.thumb_img');
+        const $List = $('img');
 
         let lists = [];
             $List.each((idx, node)=>{
@@ -132,8 +132,9 @@ router.post('/image', upload.single('image'), async(req, res) => {
             });
         var jsonString = JSON.stringify(lists);
         var jsonData = JSON.parse(jsonString);
+        var jsonLength = Object.keys(jsonData).length;
         var SQLS = "";
-        for(i=0; i<4; i++){
+        for(i=0; i<jsonLength; i++){
             var image = jsonData[i];
             SQLS += mysql.format(SQL, [image, 'TEST1ID', null, sel1, sel2]);
         }

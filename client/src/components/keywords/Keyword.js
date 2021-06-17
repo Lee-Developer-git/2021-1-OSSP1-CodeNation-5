@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Form } from 'reactstrap';
 import ImageMaterial from './ImageMaterial';
 import ViewMaterial from './ViewMaterial';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -46,6 +44,12 @@ function Keyword({ key, id, one, two, trd, four, five, six }) {
         user_id: 'TEST1ID'
     }];
     
+    const initialselect = [{
+        sel1: '',
+        sel2: ''
+    }];
+
+    const [select, setselect] = useState(initialselect);
     const [state, setstate] = useState({
         material: ""
     });
@@ -83,7 +87,7 @@ function Keyword({ key, id, one, two, trd, four, five, six }) {
 
     return(
         <>
-            <KeywordButton one={one} two={two} trd={trd} four={four} five={five} six={six}/>
+            <KeywordButton p_setSelect={setselect} one={one} two={two} trd={trd} four={four} five={five} six={six}/>
             <FormControl className={classes.formControl}>
                 <InputLabel htmlFor="select-material">자료형</InputLabel>
                 <Select

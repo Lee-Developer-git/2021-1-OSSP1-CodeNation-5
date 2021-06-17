@@ -1,0 +1,7 @@
+docx2txt==0.8
+krwordrank==1.0.3
+numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1616933195747/work
+olefile @ file:///home/conda/feedstock_root/build_artifacts/olefile_1602866521163/work
+python-pptx==0.6.18
+tika==1.24
+

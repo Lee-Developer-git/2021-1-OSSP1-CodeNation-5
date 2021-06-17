@@ -18,6 +18,9 @@ const useStyles = makeStyles({
     pos: {
         marginBottom: 12,
     },
+    photo: {
+        width: "120px"
+    }
 });
 
 function ImageMaterial({ image_link, user_id }){
@@ -28,7 +31,27 @@ function ImageMaterial({ image_link, user_id }){
             <Card className={classes.root} variant="outlined">
                 <CardContent>
                     <Typography className={classes.pos}>
-                        <img src={image_link} alt="image"/>
+                        <img className={classes.photo} src="https://image.bugsm.co.kr/album/images/500/203114/20311460.jpg" alt="image"/>
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button>저장</Button>
+                </CardActions>
+            </Card>
+            <Card className={classes.root} variant="outlined">
+                <CardContent>
+                    <Typography className={classes.pos}>
+                        <img className={classes.photo} src="https://i.ytimg.com/vi/Dj_2oFL8NMk/maxresdefault.jpg" alt="image"/>
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button>저장</Button>
+                </CardActions>
+            </Card>
+            <Card className={classes.root} variant="outlined">
+                <CardContent>
+                    <Typography className={classes.pos}>
+                        <img className={classes.photo} src="https://i.ytimg.com/vi/f2wYLkbASz8/maxresdefault.jpg" alt="image"/>
                     </Typography>
                 </CardContent>
                 <CardActions>

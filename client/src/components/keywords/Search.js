@@ -68,7 +68,6 @@ class Search extends React.Component{
         }
         return post(url, JSON.stringify(data), config);
     };
-  
 
     render(){
         return(

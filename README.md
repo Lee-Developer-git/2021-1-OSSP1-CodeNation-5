@@ -41,20 +41,20 @@ client/build/manifest.json에 default browser설정이 없다면 다음과 같�
 ## 자료조사봇
 
 ## 실행화면
-1. 검색어 키워드 추출 기능
-<img src="./image/keyword1.png" width="300" height="400"></img>
+1. 검색어 키워드 추출 기능 
+<img src="./image/keyword1.png" width="400" height="400"></img>  
+<img src="./image/keyword2.png" width="400" height="500"></img>  
 검색어를 입력하고 봇 버튼을 클릭했을 때 그와 관련한 검색어가 뜨는 기능이다.
-<img src="./image/keyword2.png" width="300" height="500"></img>
-검색어를 중복선택해서 검색버튼을 클릭했을 때 자료형에 따라 맞는 자료를 검색해 보여주는 기능이다.
-<img src="./image/keyword3.png" width="300" height="500"></img>
+검색어를 중복선택해서 검색버튼을 클릭했을 때 자료형에 따라 맞는 자료를 검색해 보여주는 기능이다.  
+<img src="./image/keyword3.png" width="500" height="400"></img>
 자료 저장버튼을 누르면 저장된 자료목록에 자료가 저장되는 기능이다.
 
-2. 자료 키워드 추출 기능
-<img src="./image/filtering.png" width="300" height="200"></img>
+2. 자료 키워드 추출 기능  
+<img src="./image/filtering.png" width="300" height="200"></img>  
 pdf, excel과 같은 자료를 넣으면 해당 키워드를 5개 추출해주는 기능이다.
 
-3. 로그인
-<img src="./image/login.png" width="300" height="200"></img>
+3. 로그인  
+<img src="./image/login.png" width="300" height="200"></img>  
 로그인 화면이다.
 
 > 참고한 오픈소스

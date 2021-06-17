@@ -41,8 +41,8 @@ client/build/manifest.json에 default browser설정이 없다면 다음과 같�
 ## 자료조사봇
 
 ## 실행화면
-1. 검색어 키워드 추출 기능 
-<img src="./image/keyword1.png" width="400" height="400"></img>  
+1. 검색어 키워드 추출 기능  
+<img src="./image/keyword1.png" width="400" height="400"></img> 
 <img src="./image/keyword2.png" width="400" height="500"></img>  
 검색어를 입력하고 봇 버튼을 클릭했을 때 그와 관련한 검색어가 뜨는 기능이다.
 검색어를 중복선택해서 검색버튼을 클릭했을 때 자료형에 따라 맞는 자료를 검색해 보여주는 기능이다.  
